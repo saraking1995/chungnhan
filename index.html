@@ -12,7 +12,6 @@
         body {
             font-family: 'Merriweather', serif;
             background-color: #f0f2f5;
-            /* Họa tiết vân giấy chìm */
             background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4d7de' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
         }
         
@@ -20,9 +19,9 @@
         #certificateContainer {
             background-color: #ffffff;
             border: 1px solid #d1d5db;
-            position: relative; /* Cần cho các phần tử con định vị tuyệt đối */
+            position: relative;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 0 0 10px #ffffff;
-            overflow: hidden; /* Ẩn các phần thừa của viền trang trí */
+            overflow: hidden;
         }
         
         /* --- Đường viền trang trí kép --- */
@@ -37,28 +36,6 @@
             z-index: 1;
         }
         
-        /* --- Con dấu CSS --- */
-        .seal {
-            position: absolute;
-            bottom: 6rem;
-            right: 6rem;
-            width: 120px;
-            height: 120px;
-            background: radial-gradient(circle, #c8a97e 0%, #a48654 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 2;
-            border: 4px solid #b49b63;
-        }
-        .seal::before {
-            content: '★';
-            font-size: 60px;
-            color: #ffffff;
-            text-shadow: 0 0 5px rgba(0,0,0,0.2);
-        }
-        
         /* --- Kiểu chữ (Typography) --- */
         .font-title {
             font-family: 'Playfair Display', serif;
@@ -71,8 +48,6 @@
     <div class="w-full max-w-5xl">
         <div id="certificateContainer" class="p-12">
             
-            <div class="seal"></div>
-
             <div class="relative z-10">
                 <div class="text-center mb-8">
                     <h1 class="font-title text-3xl font-bold text-gray-800 tracking-wider">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</h1>
@@ -98,7 +73,7 @@
                 <div class="flex justify-end mt-24">
                     <div class="text-center">
                         <p id="displayDate" class="font-semibold text-gray-800 mb-2"></p>
-                        <p class="font-title font-bold text-gray-800 text-xl tracking-wider mb-16">LÃNH ĐẠO ĐƠN VỊ</p>
+                        <p class="font-title font-bold text-gray-800 text-xl tracking-wider mb-16">ĐỘI TRƯỞỞNG</p>
                         <p class="font-title font-bold text-gray-800 text-2xl">Nguyễn Đức Nghĩa</p>
                     </div>
                 </div>
