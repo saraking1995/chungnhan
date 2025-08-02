@@ -48,6 +48,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('month').value = new Date().toISOString().slice(0, 7);
+            updateRemoveButtons();
         });
 
         function generateCertificate() {
@@ -57,7 +58,6 @@
             const recipients = Array.from(document.querySelectorAll('.recipient-name')).map(i => i.value.trim()).filter(n => n !== '');
             if (recipients.length === 0) { alert('Vui lòng nhập ít nhất một tên đồng chí!'); return; }
 
-            // TẠO MỘT ĐỐI TƯỢNG (OBJECT) CHỨA DỮ LIỆU
             const data = {
                 names: recipients,
                 month: document.getElementById('month').value,
@@ -65,19 +65,42 @@
                 unit: 'Đội Khám nghiệm hiện trường',
                 presenter: 'Nguyễn Đức Nghĩa'
             };
-
-            // MÃ HÓA DỮ LIỆU SANG CHUỖI BASE64
+            
             const encodedData = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
             
-            // TẠO URL VỚI DẤU # VÀ DỮ LIỆU ĐÃ MÃ HÓA
             const targetUrl = `https://saraking1995.github.io/chungnhan/giaychungnhan/#${encodedData}`;
             window.open(targetUrl, '_blank');
         }
 
-        // Các hàm addRecipient, removeRecipient, resetForm giữ nguyên như cũ
-        function resetForm() { /* ... */ }
-        function addRecipient() { /* ... */ }
-        function removeRecipient(button) { /* ... */ }
+        function resetForm() {
+            document.getElementById('certificateForm').reset();
+            const list = document.getElementById('recipientsList');
+            list.innerHTML = `<div class="recipient-item flex items-center space-x-3"><input type="text" class="recipient-name flex-1 px-4 py-3 border border-gray-300 rounded-lg" placeholder="Nhập họ và tên đầy đủ" required><button type="button" onclick="removeRecipient(this)" class="hidden bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg">&times;</button></div>`;
+            document.getElementById('month').value = new Date().toISOString().slice(0, 7);
+            updateRemoveButtons();
+        }
+
+        function addRecipient() {
+            const list = document.getElementById('recipientsList');
+            const item = document.createElement('div');
+            item.className = 'recipient-item flex items-center space-x-3';
+            item.innerHTML = `<input type="text" class="recipient-name flex-1 px-4 py-3 border border-gray-300 rounded-lg" placeholder="Nhập họ và tên đầy đủ" required><button type="button" onclick="removeRecipient(this)" class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-lg">&times;</button>`;
+            list.appendChild(item);
+            updateRemoveButtons();
+        }
+
+        function removeRecipient(button) {
+            button.closest('.recipient-item').remove();
+            updateRemoveButtons();
+        }
+
+        function updateRemoveButtons() {
+            const items = document.querySelectorAll('.recipient-item');
+            items.forEach(item => {
+                const button = item.querySelector('button');
+                if (button) button.classList.toggle('hidden', items.length === 1);
+            });
+        }
     </script>
 </body>
 </html>
