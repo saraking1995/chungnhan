@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chứng Nhận Hoàn Thành Xuất Sắc</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .certificate-bg {
+            background: linear-gradient(135deg, #f0f4f9 0%, #d9e2ec 100%);
+        }
+        
+        .gold-border {
+            background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+            padding: 4px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        .certificate-inner {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .star {
+            color: #ffd700;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.6));
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fadeInUp {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .btn-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        @media print {
+            body, .certificate-bg {
+                background: white !important;
+                -webkit-print-color-adjust: exact; /* For Chrome, Safari */
+                print-color-adjust: exact;
+                print-color-adjust: exact;             /* For Firefox */
+            }
+            .no-print {
+                display: none !important;
+            }
+            .certificate-container {
+                box-shadow: none !important;
+                margin: 0;
+                max-width: 100%;
+            }
+            .gold-border {
+                background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700) !important;
+                box-shadow: none !important;
+            }
+        }
+    </style>
+</head>
+<body class="certificate-bg min-h-screen flex items-center justify-center p-4">
+    <div id="loadingState" class="text-center text-gray-700">
+        <div class="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+        <p class="text-xl">Đang tải chứng nhận...</p>
+    </div>
+
+    <div id="errorState" class="hidden text-center bg-white p-8 rounded-lg shadow-lg max-w-md">
+        <svg class="w-16 h-16 mx-auto mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L4.082 16.5c-.77.833.192 2.5 1.732 2.5z"></path>
+        </svg>
+        <h2 class="text-2xl font-bold mb-4">Không tìm thấy thông tin</h2>
+        <p class="mb-6">Vui lòng quay lại trang nhập thông tin để tạo chứng nhận.</p>
+        <button onclick="goToForm()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-all duration-300">
+            Quay lại trang nhập thông tin
+        </button>
+    </div>
+
+    <div id="certificateContent" class="hidden w-full max-w-5xl certificate-container">
+        <div class="gold-border animate-fadeInUp">
+            <div class="certificate-inner p-10 relative overflow-hidden">
+                <div class="absolute top-4 left-4 w-16 h-16 border-l-4 border-t-4 border-yellow-500 opacity-60"></div>
+                <div class="absolute top-4 right-4 w-16 h-16 border-r-4 border-t-4 border-yellow-500 opacity-60"></div>
+                <div class="absolute bottom-4 left-4 w-16 h-16 border-l-4 border-b-4 border-yellow-500 opacity-60"></div>
+                <div class="absolute bottom-4 right-4 w-16 h-16 border-r-4 border-b-4 border-yellow-500 opacity-60"></div>
+                
+                <div class="text-center mb-6">
+                     <h1 class="text-2xl font-bold text-red-700" style="font-family: 'Playfair Display', serif;">
+                        CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM
+                    </h1>
+                    <p class="text-lg font-semibold text-red-600 tracking-widest">Độc lập - Tự do - Hạnh phúc</p>
+                    <div class="w-32 h-px bg-yellow-500 mx-auto mt-2 mb-6"></div>
+                </div>
+
+                <div class="text-center mb-8">
+                    <h2 class="text-5xl font-bold text-blue-800 mb-2" style="font-family: 'Playfair Display', serif;">
+                        CHỨNG NHẬN
+                    </h2>
+                    <h3 class="text-2xl font-semibold text-blue-700">
+                        HOÀN THÀNH XUẤT SẮC NHIỆM VỤ
+                    </h3>
+                </div>
+
+                <div class="text-center mb-8">
+                    <p class="text-lg text-gray-700 mb-2">Trân trọng trao tặng:</p>
+                    <div class="bg-blue-50 border-2 border-blue-200 rounded-lg p-4 mb-4">
+                        <h4 id="displayName" class="text-3xl font-bold text-blue-800" style="font-family: 'Playfair Display', serif;"></h4>
+                    </div>
+                     <p id="displayUnit" class="font-semibold text-gray-800"></p>
+                </div>
+
+                <div class="text-center mb-8">
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Đã hoàn thành xuất sắc nhiệm vụ được giao trong tháng 
+                        <span id="displayMonth" class="font-bold text-blue-800"></span>,
+                        với những thành tích nổi bật:
+                    </p>
+                    
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4">
+                        <p id="displayAchievements" class="text-gray-700 text-left whitespace-pre-line"></p>
+                    </div>
+                </div>
+
+                <div class="flex justify-end mt-12">
+                    <div class="text-center">
+                        <p id="displayDate" class="font-semibold text-gray-800 mb-2"></p>
+                        <p class="font-bold text-gray-700 mb-12">LÃNH ĐẠO ĐƠN VỊ</p>
+                        <p id="displayPresenter" class="font-bold text-gray-800"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="flex justify-center space-x-4 mt-8 no-print">
+            <button onclick="printCertificate()" 
+                    class="btn-hover bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center space-x-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"></path>
+                </svg>
+                <span>In chứng nhận</span>
+            </button>
+            
+            <button onclick="goToForm()" 
+                    class="btn-hover bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center space-x-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                <span>Tạo chứng nhận mới</span>
+            </button>
+
+            <button onclick="shareCertificate()" 
+                    class="btn-hover bg-purple-600 hover:bg-purple-700 text-white font-semibold py-3 px-8 rounded-lg transition-all duration-300 flex items-center space-x-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+                </svg>
+                <span>Chia sẻ link</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCertificateData();
+        });
+
+        function loadCertificateData() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            const requiredParams = ['names', 'month', 'achievements'];
+            const missingParams = requiredParams.filter(param => !urlParams.has(param) || urlParams.get(param) === '');
+            
+            if (missingParams.length > 0) {
+                showError();
+                return;
+            }
+
+            const certificateData = {
+                names: urlParams.get('names').split('|'),
+                unit: urlParams.get('unit') || 'Đơn vị công tác',
+                month: urlParams.get('month'),
+                achievements: urlParams.get('achievements'),
+                presenter: urlParams.get('presenter') || 'Lãnh đạo đơn vị'
+            };
+
+            const monthDate = new Date(certificateData.month + '-02'); // Use day 2 to avoid timezone issues
+            const monthDisplay = 'tháng ' + String(monthDate.getMonth() + 1).padStart(2, '0') + ' năm ' + monthDate.getFullYear();
+
+            const today = new Date();
+            const dateString = `Ngày ${today.getDate().toString().padStart(2, '0')}, tháng ${(today.getMonth() + 1).toString().padStart(2, '0')}, năm ${today.getFullYear()}`;
+
+            let namesDisplay = '';
+            if (certificateData.names.length === 1) {
+                namesDisplay = `đồng chí ${certificateData.names[0]}`;
+            } else {
+                 namesDisplay = `các đồng chí có tên sau: <br><span class="font-normal">${certificateData.names.join(', ')}</span>`;
+            }
+
+            document.getElementById('displayName').innerHTML = namesDisplay;
+            document.getElementById('displayUnit').textContent = certificateData.unit;
+            document.getElementById('displayMonth').textContent = monthDisplay;
+            document.getElementById('displayAchievements').textContent = certificateData.achievements;
+            document.getElementById('displayPresenter').textContent = certificateData.presenter;
+            document.getElementById('displayDate').textContent = dateString;
+
+            document.title = `Chứng nhận - ${certificateData.names.join(', ')}`;
+
+            setTimeout(() => {
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('certificateContent').classList.remove('hidden');
+            }, 500);
+        }
+
+        function showError() {
+            document.getElementById('loadingState').classList.add('hidden');
+            document.getElementById('errorState').classList.remove('hidden');
+        }
+
+        function printCertificate() {
+            window.print();
+        }
+
+        function goToForm() {
+            window.location.href = 'index.html'; // Đã sửa thành index.html
+        }
+
+        function shareCertificate() {
+            const currentUrl = window.location.href;
+            const displayName = document.getElementById('displayName').textContent;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Chứng nhận hoàn thành xuất sắc nhiệm vụ',
+                    text: `Chứng nhận cho ${displayName}`,
+                    url: currentUrl
+                }).catch(console.error);
+            } else {
+                navigator.clipboard.writeText(currentUrl).then(() => {
+                    const button = event.target.closest('button');
+                    const originalText = button.innerHTML;
+                    button.innerHTML = `
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span>Đã sao chép!</span>
+                    `;
+                    button.classList.remove('bg-purple-600', 'hover:bg-purple-700');
+                    button.classList.add('bg-green-600');
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalText;
+                        button.classList.remove('bg-green-600');
+                        button.classList.add('bg-purple-600', 'hover:bg-purple-700');
+                    }, 2000);
+                }).catch(() => {
+                    alert('Không thể sao chép link. Vui lòng sao chép thủ công từ thanh địa chỉ.');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
