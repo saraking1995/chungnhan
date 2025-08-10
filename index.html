@@ -1,118 +1,213 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="vi" class="h-full">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chứng Nhận Hoàn Thành Xuất Sắc</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:wght@400;700&display=swap');
-        
-        /* --- Nền và Bố cục --- */
-        body {
-            font-family: 'Merriweather', serif;
-            background-color: #f0f2f5;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23d4d7de' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        
-        /* --- Khung chính của chứng nhận --- */
-        #certificateContainer {
-            background-color: #ffffff;
-            border: 1px solid #d1d5db;
-            position: relative;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1), 0 0 0 10px #ffffff;
-            overflow: hidden;
-        }
-        
-        /* --- Đường viền trang trí kép --- */
-        #certificateContainer::before {
-            content: '';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            bottom: 20px;
-            border: 3px double #b49b63; /* Viền vàng gold */
-            z-index: 1;
-        }
-        
-        /* --- Kiểu chữ (Typography) --- */
-        .font-title {
-            font-family: 'Playfair Display', serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="light only" />
+  <title>Chứng Nhận Hoàn Thành Xuất Sắc</title>
 
-    </style>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Merriweather:wght@300;400;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --gold:#b49b63;
+    }
+    body{font-family:'Merriweather',serif}
+
+    /* Nền cho desktop */
+    .bg-pattern{
+      background-color:#f5f6f8;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cpath fill='%23c9cdd6' fill-opacity='.12' d='M28 6a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 48a2 2 0 1 1 0-4 2 2 0 0 1 0 4zM6 30a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm48 0a2 2 0 1 1 0-4 2 2 0 0 1 0 4z'/%3E%3C/svg%3E");
+    }
+
+    /* Khung chứng nhận */
+    .certificate{
+      position:relative;
+      background:#fff;
+      box-shadow:0 10px 30px rgba(0,0,0,.1);
+      overflow:hidden;
+      isolation:isolate;
+    }
+    .certificate::before{
+      content:"";
+      position:absolute;
+      inset:20px;
+      border:3px double var(--gold);
+      z-index:1;
+      border-radius:14px;
+    }
+    /* Watermark */
+    .watermark{
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      opacity:.06;
+      z-index:0;
+      pointer-events:none;
+    }
+
+    /* Danh sách tên */
+    #recipientsList {
+      text-align: center;
+      line-height: 1.7;
+    }
+    #recipientsList p {
+      margin-bottom: .25rem;
+    }
+
+    /* Mobile tối ưu */
+    @media (max-width: 768px){
+      .watermark { display: none !important; }
+    }
+    @media (max-width: 480px){
+      .certificate::before { inset: 12px; border-width: 2px; border-radius: 12px; }
+      .bg-pattern { background-image: none; background-color: #f7f7f9; }
+    }
+
+    /* In A4 */
+    @page{size: A4 landscape; margin: 16mm}
+    @media print{
+      .bg-pattern{background:none}
+      .toolbar{display:none !important}
+      body{background:white}
+      .shadow-print{box-shadow:none}
+    }
+  </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-8">
+<body class="h-full bg-pattern">
 
-    <div class="w-full max-w-5xl">
-        <div id="certificateContainer" class="p-12">
-            
-            <div class="relative z-10">
-                <div class="text-center mb-8">
-                    <h1 class="font-title text-3xl font-bold text-gray-800 tracking-wider">PHÒNG KỸ THUẬT HÌNH SỰ</h1>
-                    <p class="text-xl font-bold text-gray-700 tracking-[0.2em]">ĐỘI KHÁM NGHIỆM HIỆN TRƯỜNG</p>
-                    <div class="w-48 h-0.5 bg-yellow-600 mx-auto mt-4"></div>
-                </div>
+  <!-- Toolbar -->
+  <div class="toolbar max-w-6xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 flex items-center justify-end gap-2">
+    <button id="printBtn" class="px-4 py-3 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-sm font-medium shadow-sm w-full sm:w-auto">In</button>
+    <button id="refreshBtn" class="px-4 py-3 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-sm font-medium shadow-sm w-full sm:w-auto">Tải lại</button>
+  </div>
 
-                <div class="text-center mb-12">
-                    <h2 class="font-title text-6xl font-bold text-blue-900">CHỨNG NHẬN</h2>
-                    <h3 class="text-2xl font-semibold text-blue-800 mt-2">HOÀN THÀNH XUẤT SẮC NHIỆM VỤ TRONG THÁNG</h3>
-                </div>
+  <main class="min-h-[92vh] flex items-center justify-center p-6">
+    <section class="certificate w-full max-w-[1200px] rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16 shadow-print relative">
 
-                <div class="text-center text-xl leading-relaxed max-w-3xl mx-auto">
-                    <p class="mb-4">Trân trọng trao tặng các đồng chí:</p>
-                    
-                    <div id="recipientsList" class="my-8 font-bold text-3xl text-blue-800" style="font-family: 'Playfair Display', serif;">
-                        <p id="loadingText" class="text-xl font-sans">Đang tải danh sách...</p>
-                    </div>
-                    
-                    <p>Đã có thành tích đặc biệt xuất sắc trong công tác, góp phần vào sự thành công chung của đơn vị trong tháng <b id="displayMonth" class="text-blue-900"></b>.</p>
-                </div>
+      <!-- Watermark -->
+      <svg class="watermark w-[70%] max-w-[900px]" viewBox="0 0 800 400" aria-hidden="true">
+        <g fill="none" stroke="var(--gold)" stroke-width="2">
+          <path d="M110,320 C220,140 580,140 690,320"/>
+          <path d="M130,320 C240,160 560,160 670,320"/>
+          <path d="M150,320 C260,180 540,180 650,320"/>
+        </g>
+      </svg>
 
-                <div class="flex justify-end mt-24">
-                    <div class="text-center">
-                        <p id="displayDate" class="font-semibold text-gray-800 mb-2"></p>
-                        <p class="font-title font-bold text-gray-800 text-xl tracking-wider mb-16">ĐỘI TRƯỞNG</p>
-                        <p class="font-title font-bold text-gray-800 text-2xl">Nguyễn Đức Nghĩa</p>
-                    </div>
-                </div>
-            </div>
+      <div class="relative z-10">
+
+        <!-- Header -->
+        <header class="text-center">
+          <h1 class="font-title text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 tracking-wide">PHÒNG KỸ THUẬT HÌNH SỰ</h1>
+          <p class="text-sm sm:text-base md:text-lg font-semibold text-gray-700 tracking-[0.18em] mt-1">ĐỘI KHÁM NGHIỆM HIỆN TRƯỜNG</p>
+          <div class="w-40 md:w-48 h-0.5 bg-[color:var(--gold)] mx-auto mt-4"></div>
+        </header>
+
+        <!-- Title -->
+        <div class="text-center mt-8 md:mt-10">
+          <h2 class="font-title font-extrabold text-[clamp(28px,8vw,56px)] text-blue-900">CHỨNG NHẬN</h2>
+          <h3 class="text-[clamp(14px,4.4vw,24px)] font-semibold text-blue-800 mt-2">HOÀN THÀNH XUẤT SẮC NHIỆM VỤ TRONG THÁNG</h3>
         </div>
-    </div>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // !!! THAY THẾ BẰNG URL WEB APP CỦA BẠN !!!
-            const API_URL = 'https://script.google.com/macros/s/AKfycbx41P3z79Y-1FzYsek-Tls9zffdIOfy5w4x36im4-51uFNnJyTZ5Jb-uYjah2nQ9sG7/exec';
 
-            const listContainer = document.getElementById('recipientsList');
-            const loadingText = document.getElementById('loadingText');
+        <!-- Body -->
+        <section class="text-center text-[clamp(14px,4vw,20px)] leading-relaxed max-w-[min(92vw,48rem)] mx-auto mt-6 sm:mt-8">
+          <p class="mb-4">Trân trọng trao tặng các đồng chí:</p>
 
-            fetch(API_URL)
-                .then(response => response.json())
-                .then(names => {
-                    if (names && names.length > 0) {
-                        loadingText.remove();
-                        const nameListString = names.join('<br>');
-                        listContainer.innerHTML = nameListString;
-                    } else {
-                        loadingText.textContent = 'Không có đồng chí nào trong danh sách.';
-                    }
-                })
-                .catch(error => {
-                    console.error('Lỗi khi tải dữ liệu:', error);
-                    loadingText.textContent = 'Không thể tải được danh sách.';
-                    loadingText.classList.add('text-red-500');
-                });
+          <div id="recipientsWrap" class="my-8">
+            <div id="skeleton" class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3" aria-live="polite">
+              <div class="h-7 sm:h-8 rounded bg-gray-200 animate-pulse"></div>
+              <div class="h-7 sm:h-8 rounded bg-gray-200 animate-pulse"></div>
+              <div class="h-7 sm:h-8 rounded bg-gray-200 animate-pulse"></div>
+              <div class="h-7 sm:h-8 rounded bg-gray-200 animate-pulse"></div>
+            </div>
+            <div id="recipientsList" class="font-title font-bold text-[clamp(20px,5.2vw,36px)] text-blue-900 columns-1 lg:columns-2 gap-6 break-inside-avoid"></div>
+            <p id="emptyText" class="hidden text-base text-gray-600">Không có đồng chí nào trong danh sách.</p>
+            <p id="errorText" class="hidden text-base text-red-600">Không thể tải được danh sách. Vui lòng thử lại.</p>
+          </div>
 
-            const now = new Date();
-            document.getElementById('displayMonth').textContent = (now.getMonth() + 1) + '/' + now.getFullYear();
-            document.getElementById('displayDate').textContent = `Ngày ${now.getDate()} tháng ${now.getMonth() + 1} năm ${now.getFullYear()}`;
+          <p>Đã có thành tích đặc biệt xuất sắc trong công tác, góp phần vào sự thành công chung của đơn vị trong tháng <b id="displayMonth" class="text-blue-900"></b>.</p>
+        </section>
+
+        <!-- Footer -->
+        <footer class="flex justify-end mt-12 sm:mt-16 md:mt-24">
+          <div class="text-center">
+            <p id="displayDate" class="font-semibold text-gray-800 mb-2 text-sm sm:text-base"></p>
+            <p class="font-title font-bold text-gray-800 text-base sm:text-xl tracking-wider mb-12 sm:mb-16">ĐỘI TRƯỞNG</p>
+            <p class="font-title font-bold text-gray-800 text-lg sm:text-2xl">Nguyễn Đức Nghĩa</p>
+          </div>
+        </footer>
+
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (function(){
+      const API_URL = 'https://script.google.com/macros/s/AKfycbx41P3z79Y-1FzYsek-Tls9zffdIOfy5w4x36im4-51uFNnJyTZ5Jb-uYjah2nQ9sG7/exec';
+      const el = {
+        list: document.getElementById('recipientsList'),
+        skeleton: document.getElementById('skeleton'),
+        empty: document.getElementById('emptyText'),
+        error: document.getElementById('errorText'),
+        month: document.getElementById('displayMonth'),
+        date: document.getElementById('displayDate'),
+        printBtn: document.getElementById('printBtn'),
+        refreshBtn: document.getElementById('refreshBtn'),
+      };
+
+      const now = new Date();
+      el.month.textContent = (now.getMonth()+1) + '/' + now.getFullYear();
+      el.date.textContent = `Ngày ${now.getDate()} tháng ${now.getMonth()+1} năm ${now.getFullYear()}`;
+
+      function renderNames(names){
+        el.list.innerHTML = '';
+        const frag = document.createDocumentFragment();
+        names.forEach((n)=>{
+          const p = document.createElement('p');
+          p.textContent = n;
+          frag.appendChild(p);
         });
-    </script>
+        el.list.appendChild(frag);
+      }
+
+      function show(section){
+        el.skeleton.classList.add('hidden');
+        el.empty.classList.add('hidden');
+        el.error.classList.add('hidden');
+        if(section==='empty') el.empty.classList.remove('hidden');
+        if(section==='error') el.error.classList.remove('hidden');
+      }
+
+      async function fetchNames(){
+        el.skeleton.classList.remove('hidden');
+        show('');
+        try{
+          const res = await fetch(API_URL);
+          if(!res.ok) throw new Error('HTTP '+res.status);
+          const data = await res.json();
+          const names = Array.isArray(data) ? data.filter(Boolean) : [];
+          if(names.length){ renderNames(names); show(''); }
+          else{ show('empty'); }
+        }catch(err){
+          show('error');
+          console.error('Lỗi khi tải dữ liệu:', err);
+        }finally{
+          el.skeleton.classList.add('hidden');
+        }
+      }
+
+      el.printBtn?.addEventListener('click', ()=> window.print());
+      el.refreshBtn?.addEventListener('click', ()=> fetchNames());
+
+      fetchNames();
+    })();
+  </script>
 </body>
 </html>
-
-
-
