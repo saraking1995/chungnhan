@@ -40,14 +40,11 @@
       opacity:.06; z-index:0; pointer-events:none;
     }
 
-    /* ===== DANH SÁCH TÊN: ép 1 cột, căn giữa, theo thứ tự Sheet ===== */
+    /* Danh sách tên: ép 1 cột, căn giữa, theo thứ tự Sheet */
     #recipientsList{
-      /* vô hiệu mọi multi-column cũ */
       columns: 1 !important; -webkit-columns:1 !important; -moz-columns:1 !important;
-      /* dùng flex cho chắc chắn 1 cột */
       display:flex !important; flex-direction:column !important; align-items:center !important;
-      text-align:center; line-height:1.7;
-      gap:.25rem;
+      text-align:center; line-height:1.7; gap:.25rem;
     }
     #recipientsList p{ margin:0; }
 
@@ -62,19 +59,12 @@
     @page{ size:A4 landscape; margin:16mm }
     @media print{
       .bg-pattern{ background:none }
-      .toolbar{ display:none !important }
       body{ background:#fff }
       .shadow-print{ box-shadow:none }
     }
   </style>
 </head>
 <body class="h-full bg-pattern">
-
-  <!-- Toolbar (ẩn khi in) -->
-  <div class="toolbar max-w-6xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 flex items-center justify-end gap-2">
-    <button id="printBtn" class="px-4 py-3 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-sm font-medium shadow-sm w-full sm:w-auto">In</button>
-    <button id="refreshBtn" class="px-4 py-3 rounded-xl border border-gray-300 bg-white hover:bg-gray-50 text-sm font-medium shadow-sm w-full sm:w-auto">Tải lại</button>
-  </div>
 
   <main class="min-h-[92vh] flex items-center justify-center p-6">
     <section class="certificate w-full max-w-[1200px] rounded-2xl p-6 sm:p-8 md:p-12 lg:p-16 shadow-print relative">
@@ -129,9 +119,10 @@
             <p id="errorText" class="hidden text-base text-red-600">Không thể tải được danh sách. Vui lòng thử lại.</p>
           </div>
 
+          <!-- THÁNG: nhập tay tại đây -->
           <p>
             Đã có thành tích đặc biệt xuất sắc trong công tác, góp phần vào sự thành công chung của đơn vị trong tháng
-            <b id="displayMonth" class="text-blue-900"></b>
+            <b class="text-blue-900">08/2025</b>.
           </p>
         </section>
 
@@ -149,7 +140,7 @@
 
   <script>
     (function(){
-      // THAY BẰNG URL WEB APP CỦA BẠN NẾU CẦN
+      // URL Web App trả về mảng tên theo thứ tự Google Sheet
       const API_URL = 'https://script.google.com/macros/s/AKfycbx41P3z79Y-1FzYsek-Tls9zffdIOfy5w4x36im4-51uFNnJyTZ5Jb-uYjah2nQ9sG7/exec';
 
       const el = {
@@ -157,25 +148,21 @@
         skeleton: document.getElementById('skeleton'),
         empty: document.getElementById('emptyText'),
         error: document.getElementById('errorText'),
-        month: document.getElementById('displayMonth'),
         date: document.getElementById('displayDate'),
-        printBtn: document.getElementById('printBtn'),
-        refreshBtn: document.getElementById('refreshBtn'),
       };
 
-      // Ngày tháng hiển thị
+      // Hiển thị ngày (giữ tự động)
       const now = new Date();
-      el.month.textContent = (now.getMonth()+1) + '/' + now.getFullYear();
       el.date.textContent = `Ngày ${now.getDate()} tháng ${now.getMonth()+1} năm ${now.getFullYear()}`;
 
-      // Render giữ nguyên thứ tự như Sheet (không sort lại)
+      // Render giữ nguyên thứ tự như Sheet (không sort)
       function renderNames(names){
         el.list.innerHTML = '';
         const frag = document.createDocumentFragment();
         names.forEach((n)=>{
           if(!n) return;
           const p = document.createElement('p');
-          p.textContent = n;              // dùng textContent để tránh XSS
+          p.textContent = n;              // an toàn XSS
           frag.appendChild(p);
         });
         el.list.appendChild(frag);
@@ -204,8 +191,7 @@
           else{ show('empty'); }
         }catch(err){
           if(retry>0){
-            // backoff nhẹ
-            setTimeout(()=>fetchNames(retry-1), 600);
+            setTimeout(()=>fetchNames(retry-1), 600); // retry nhẹ
           }else{
             show('error');
             console.error('Lỗi khi tải dữ liệu:', err);
@@ -215,14 +201,9 @@
         }
       }
 
-      el.printBtn?.addEventListener('click', ()=> window.print());
-      el.refreshBtn?.addEventListener('click', ()=> fetchNames(1));
-
-      // Khởi động
+      // Tự load danh sách 1 lần
       fetchNames(1);
     })();
   </script>
 </body>
 </html>
-
-
